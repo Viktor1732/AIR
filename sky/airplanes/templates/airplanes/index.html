@@ -1,17 +1,32 @@
 {% extends 'airplanes/base.html' %}
 
 {% block content %}
-
-<h1>{{ title }}</h1>
-
-{% for p in posts %}
-<ul>
-    <li>
-        <h2>{{ p.title}}</h2>
-        <p>{{ p.content }}</p>
-        <hr>
+<ul class="content-blocks">
+    {% for p in posts %}
+    <li class="content-block">
+        <div class="block-desc">
+            {% if p.photo %}
+            <div class="desc-image">
+                <img class="desc-img" src="{{ p.photo.url }}">
+            </div>
+            {% endif %}
+            <div class="desc-wrap">
+            <div class="block-cat">
+                <p>Категория: {{ p.cat }}</p>
+                <p>Дата: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
+            </div>
+                <h2 class="block-title">{{ p.title }}</h2>
+                <p class="block-text">{{ p.content|truncatewords:50 }}</p>
+                <div class="block-button">
+                    <a class="block-btn" href="#">Читать пост</a>
+                </div>
+            </div>
+        </div>
     </li>
+    {% endfor %}
 </ul>
-
-{% endfor %}
 {% endblock content %}
+
+
+
+

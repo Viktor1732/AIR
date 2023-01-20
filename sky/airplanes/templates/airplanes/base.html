@@ -1,21 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'airplanes/css/styles.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'airplanes/css/reset.css' %}" type="text/css">
+    <link href="{% static 'airplanes/images/logo/logo.jpg' %}" rel="shortcut icon">
     <title>{{ title }}</title>
 </head>
 <body>
 
-{% block menu %}
-<ul>
-{% for m in menu %}
-    <li>{{ m.title }}</li>
-{% endfor %}
-</ul>
-{% endblock menu %}
+{% block mainmenu %}
+<header>
+    <!--Nav-->
+    <nav class="nav">
+        <div class="nav-list">
+            <ul class="nav-items">
+                <li class="nav-logo"><a href="{% url 'home' %}">
+                    <div class="logo-img"></div>
+                </a></li>
+                {% for m in menu %}
+                <li class="nav-item"><a class="nav-link" href="#">{{ m.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+</header>
 
+<div class="container">
+    <h1 class="main-h1"></h1>
+
+    <!--Sidebar слева-->
+    <div class="main-nav">
+        <ul class="main-nav-items">
+            <li class="main-nav-item"><a class="main-nav-link" href="{% url 'home' %}">Все категории</a></li>
+            <li class="main-nav-item"><a href="#" class="main-nav-link">Самолёты</a></li>
+            <li class="main-nav-item"><a href="#" class="main-nav-link">Вертолёты</a></li>
+        </ul>
+    </div>
+{% endblock mainmenu %}
+
+<!--Content-->
 {% block content %}
 {% endblock content %}
+</div>
+
+<!--Footer-->
+<footer class="footer">
+    <p class="footer-text">&copy; Copyright 2022, Krasnoyarsk</p>
+</footer>
 
 </body>
 </html>
