@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Airplane
 
@@ -33,6 +33,16 @@ def contact(request):
 
 def login(request):
     return HttpResponse("<h1>ВХОД</h1>")
+
+
+def show_post(request, post_slug):
+    posts = get_object_or_404(Airplane, slug=post_slug)
+    context = {
+        'menu': menu,
+        'title': posts.title,
+        'post': posts
+    }
+    return render(request, 'airplanes/show_post.html', context=context)
 
 
 def pageNotFound(request, exception):

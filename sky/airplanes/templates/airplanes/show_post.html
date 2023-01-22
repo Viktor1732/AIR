@@ -1,0 +1,18 @@
+{% extends 'airplanes/base.html' %}
+
+{% block content %}
+
+<div class="block-desc">
+    {% if post.photo %}
+    <div class="desc-image">
+        <img class="desc-img" src="{{ post.photo.url }}">
+    </div>
+    {% endif %}
+    <div class="desc-wrap">
+        <h2 class="block-title">{{ post.title }}</h2>
+        <p class="block-text">{{ post.content }}</p>
+    </div>
+</div>
+
+
+{% endblock content %}

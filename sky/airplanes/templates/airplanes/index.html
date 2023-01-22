@@ -18,7 +18,7 @@
                 <h2 class="block-title">{{ p.title }}</h2>
                 <p class="block-text">{{ p.content|truncatewords:50 }}</p>
                 <div class="block-button">
-                    <a class="block-btn" href="#">Читать пост</a>
+                    <a class="block-btn" href="{{ p.get_absolute_url }}">Читать пост</a>
                 </div>
             </div>
         </div>
