@@ -33,9 +33,19 @@
     <!--Sidebar слева-->
     <div class="main-nav">
         <ul class="main-nav-items">
-            <li class="main-nav-item"><a class="main-nav-link" href="{% url 'home' %}">Все категории</a></li>
-            <li class="main-nav-item"><a href="#" class="main-nav-link">Самолёты</a></li>
-            <li class="main-nav-item"><a href="#" class="main-nav-link">Вертолёты</a></li>
+            {% if cat_selected == 0 %}
+                <li class="selected">Все категории</li>
+            {% else %}
+                <li class="main-nav-item"><a class="main-nav-link" href="{% url 'home' %}">Все категории</a></li>
+            {% endif %}
+
+            {% for c in cats %}
+                {% if cat_selected == c.pk %}
+                    <li class="selected">{{ c.name }}</li>
+                {% else %}
+                    <li class="main-nav-item"><a href='{{ c.get_absolute_url }}' class="main-nav-link">{{ c.name }}</a></li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </div>
 {% endblock mainmenu %}

@@ -1,0 +1,32 @@
+{% extends 'airplanes/base.html' %}
+
+{% block content %}
+
+<ul class="content-blocks">
+    {% for p in post %}
+    {% if p.cat_id == cat_selected %}
+    <li class="content-block">
+        <div class="block-desc">
+            {% if p.photo %}
+            <div class="desc-image">
+                <img class="desc-img" src="{{ p.photo.url }}">
+            </div>
+            {% endif %}
+            <div class="desc-wrap">
+            <div class="block-cat">
+                <p>Категория: {{ p.cat }}</p>
+                <p>Дата: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
+            </div>
+                <h2 class="block-title">{{ p.title }}</h2>
+                <p class="block-text">{{ p.content|truncatewords:50 }}</p>
+                <div class="block-button">
+                    <a class="block-btn" href="{{ p.get_absolute_url }}">Читать пост</a>
+                </div>
+            </div>
+        </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+{% endblock content %}
