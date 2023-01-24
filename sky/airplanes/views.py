@@ -1,21 +1,13 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404
 
-from .models import Airplane, Category
-
-menu = [{'title': 'О сайте', 'url_name': 'about'},
-        {'title': 'Добавить статью', 'url_name': 'add_page'},
-        {'title': 'Обратная связь', 'url_name': 'contact'},
-        {'title': 'Войти', 'url_name': 'login'}]
+from .models import Airplane
 
 
 def index(request):
     posts = Airplane.objects.all()
-    cats = Category.objects.all()
     context = {
-        'menu': menu,
         'posts': posts,
-        'cats': cats,
         'title': "Авиация мира",
         'cat_selected': 0
     }
@@ -41,7 +33,6 @@ def login(request):
 def show_post(request, post_slug):
     posts = get_object_or_404(Airplane, slug=post_slug)
     context = {
-        'menu': menu,
         'title': posts.title,
         'post': posts
     }
@@ -50,16 +41,13 @@ def show_post(request, post_slug):
 
 def show_category(request, cat_id):
     posts = Airplane.objects.filter(cat_id=cat_id)
-    cats = Category.objects.all()
 
     if len(posts) == 0:
         raise Http404()
 
     context = {
-        'menu': menu,
         'title': 'Отображение по рубрикам',
         'post': posts,
-        'cats': cats,
         'cat_selected': cat_id
     }
     return render(request, 'airplanes/category.html', context=context)
