@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
+from .forms import AddAirplaneForm
 from .models import Airplane
 
 
@@ -19,7 +20,14 @@ def about(request):
 
 
 def add_page(request):
-    return HttpResponse('<h1>Добавить страницу</h1>')
+    if request.method == 'POST':
+        form = AddAirplaneForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = AddAirplaneForm()
+    return render(request, 'airplanes/add_page.html', {'form': form, 'title': 'Добавление статьи'})
 
 
 def contact(request):
