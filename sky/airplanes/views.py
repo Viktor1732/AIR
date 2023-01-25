@@ -21,7 +21,7 @@ def about(request):
 
 def add_page(request):
     if request.method == 'POST':
-        form = AddAirplaneForm(request.POST)
+        form = AddAirplaneForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')
