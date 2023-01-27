@@ -1,18 +1,24 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView
 
 from .forms import AddAirplaneForm
 from .models import Airplane
 
 
-def index(request):
-    posts = Airplane.objects.all()
-    context = {
-        'posts': posts,
-        'title': "Авиация мира",
-        'cat_selected': 0
-    }
-    return render(request, 'airplanes/index.html', context=context)
+class AirplaneHome(ListView):
+    model = Airplane
+    template_name = 'airplanes/index.html'
+    context_object_name = 'posts'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        context['cat_selected'] = 0
+        return context
+
+    def get_queryset(self):
+        return Airplane.objects.filter(is_published=True)
 
 
 def about(request):
