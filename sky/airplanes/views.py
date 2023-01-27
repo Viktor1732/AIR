@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
@@ -53,18 +53,19 @@ def show_post(request, post_slug):
     return render(request, 'airplanes/show_post.html', context=context)
 
 
-def show_category(request, cat_id):
-    posts = Airplane.objects.filter(cat_id=cat_id)
+class AirplaneCategory(ListView):
+    model = Airplane
+    template_name = 'airplanes/index.html'
+    context_object_name = 'posts'
 
-    if len(posts) == 0:
-        raise Http404()
+    def get_queryset(self):
+        return Airplane.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
-    context = {
-        'title': 'Отображение по рубрикам',
-        'post': posts,
-        'cat_selected': cat_id
-    }
-    return render(request, 'airplanes/category.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Категория' + str(context['posts'][0].cat)
+        context['cat_selected'] = context['posts'][0].cat_id
+        return context
 
 
 def pageNotFound(request, exception):

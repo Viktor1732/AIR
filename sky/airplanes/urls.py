@@ -9,5 +9,5 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('login/', login, name='login'),
     path('post/<slug:post_slug>/', show_post, name='post'),
-    path('cats/<int:cat_id>/', show_category, name='category')
+    path('category/<slug:cat_slug>/', AirplaneCategory.as_view(), name='category')
 ]
