@@ -1,5 +1,4 @@
 {% load static %}
-{% load airplane_tags %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,7 +10,6 @@
 </head>
 <body>
 
-{% menu_tag as menu %}
 {% block mainmenu %}
 <header>
     <!--Nav-->
@@ -34,7 +32,6 @@
 
     <!--Sidebar слева-->
 
-    {% cats_tag as categories %}
     <div class="main-nav">
         <ul class="main-nav-items">
             {% if cat_selected == 0 %}
@@ -43,7 +40,7 @@
                 <li class="main-nav-item"><a class="main-nav-link" href="{% url 'home' %}">Все категории</a></li>
             {% endif %}
 
-            {% for c in categories %}
+            {% for c in cats %}
                 {% if cat_selected == c.pk %}
                     <li class="selected">{{ c.name }}</li>
                 {% else %}
