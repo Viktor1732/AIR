@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from .forms import AddAirplaneForm
 from .models import Airplane
@@ -25,15 +26,15 @@ def about(request):
     return render(request, 'airplanes/about.html', {'title': 'О сайте'})
 
 
-def add_page(request):
-    if request.method == 'POST':
-        form = AddAirplaneForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = AddAirplaneForm()
-    return render(request, 'airplanes/add_page.html', {'form': form, 'title': 'Добавление статьи'})
+class AddPost(CreateView):
+    form_class = AddAirplaneForm
+    template_name = 'airplanes/add_page.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        form = super().get_context_data(**kwargs)
+        form['title'] = 'Добавить статью'
+        return form
 
 
 def contact(request):
