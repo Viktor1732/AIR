@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .forms import AddAirplaneForm
 from .models import Airplane
@@ -44,6 +44,18 @@ def login(request):
     return HttpResponse("<h1>ВХОД</h1>")
 
 
+class ShowPost(DetailView):
+    model = Airplane
+    context_object_name = 'post'
+    template_name = 'airplanes/show_post.html'
+    slug_url_kwarg = 'post_slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['post']
+        return context
+
+
 def show_post(request, post_slug):
     posts = get_object_or_404(Airplane, slug=post_slug)
     context = {
@@ -57,6 +69,7 @@ class AirplaneCategory(ListView):
     model = Airplane
     template_name = 'airplanes/index.html'
     context_object_name = 'posts'
+    allow_empty = False
 
     def get_queryset(self):
         return Airplane.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
