@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', AirplaneHome.as_view(), name='home'),
-    path('about/', about, name='about'),
+    path('about/', ShowAbout.as_view(), name='about'),
     path('add_page/', AddPost.as_view(), name='add_page'),
     path('contact/', contact, name='contact'),
     path('login/', LoginUser.as_view(), name='login'),

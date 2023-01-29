@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
 
 from .forms import AddAirplaneForm, RegisterUserForm, LoginUserForm
 from .models import Airplane
@@ -24,8 +24,13 @@ class AirplaneHome(DataMixin, ListView):
         return Airplane.objects.filter(is_published=True)
 
 
-def about(request):
-    return render(request, 'airplanes/about.html', {'title': 'О сайте'})
+class ShowAbout(DataMixin, TemplateView):
+    template_name = 'airplanes/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Информация о сайте', cat_selected=None)
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 class AddPost(DataMixin, CreateView):
@@ -88,7 +93,7 @@ class RegisterUser(DataMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Регистрация пользователя'
-        c_def = self.get_user_context()
+        c_def = self.get_user_context(cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
@@ -105,7 +110,7 @@ class LoginUser(DataMixin, LoginView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Авторизация'
-        c_def = self.get_user_context()
+        c_def = self.get_user_context(cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_success_url(self):

@@ -1,1 +1,12 @@
-<h1>О сайте</h1>
+{% extends 'airplanes/base.html' %}
+
+{% block content %}
+
+<div class="about-wrap">
+    <h1 class="about-title">{{ title }}</h1>
+    <p class="about-desc">Это сайт создан для обучения работе с фреймворком Django.
+        В процессе преследовались задачи написать максимально 'чистый', 'красивый' и понятный код.
+        Не судите строго) Контент для сайта взят с wikipedia.org и Яндекс.Картинки.</p>
+</div>
+
+{% endblock content %}
