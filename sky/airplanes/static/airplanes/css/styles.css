@@ -33,12 +33,12 @@ body a {
 }
 
 .logo-img {
-    width: 88px;
+    width: 130px;
     height: 60px;
-    background: url('../images/logo/logo.jpg');
+    background: url('../images/logo/logo.png');
     background-repeat:no-repeat;
     background-position: center center;
-    background-size: 90px 45px;
+    background-size: 130px 45px;
 }
 
 .nav-items {
@@ -75,7 +75,7 @@ body a {
 /*main-nav*/
 .main-nav {
     width: 50%;
-    background-color: #7a7a7a;
+    background-color: #4e4d4d;
     display: flex;
 }
 
