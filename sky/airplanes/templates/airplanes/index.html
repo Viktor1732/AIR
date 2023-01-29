@@ -1,9 +1,12 @@
 {% extends 'airplanes/base.html' %}
 
 {% block content %}
-<ul class="content-blocks">
     {% for p in posts %}
-    <li class="content-block">
+    <div class="content-block">
+        <div class="block-cat">
+            <p>Категория: {{ p.cat }}</p>
+            <p>Дата: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
+        </div>
         <div class="block-desc">
             {% if p.photo %}
             <div class="desc-image">
@@ -11,10 +14,6 @@
             </div>
             {% endif %}
             <div class="desc-wrap">
-            <div class="block-cat">
-                <p>Категория: {{ p.cat }}</p>
-                <p>Дата: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
-            </div>
                 <h2 class="block-title">{{ p.title }}</h2>
                 <p class="block-text">{{ p.content|truncatewords:50 }}</p>
                 <div class="block-button">
@@ -22,9 +21,8 @@
                 </div>
             </div>
         </div>
-    </li>
+    </div>
     {% endfor %}
-</ul>
 {% endblock content %}
 
 
