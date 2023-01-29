@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
-from .forms import AddAirplaneForm
+from .forms import AddAirplaneForm, RegisterUserForm
 from .models import Airplane
 from .utils import DataMixin
 
@@ -77,8 +77,20 @@ class AirplaneCategory(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Категория' + str(context['posts'][0].cat),
+        c_def = self.get_user_context(title='Категория ' + str(context['posts'][0].cat),
                                       cat_selected=context['posts'][0].cat_id)
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'airplanes/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация пользователя'
+        c_def = self.get_user_context()
         return dict(list(context.items()) + list(c_def.items()))
 
 

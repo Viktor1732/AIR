@@ -16,12 +16,14 @@
     <nav class="nav">
         <div class="nav-list">
             <ul class="nav-items">
-                <li class="nav-logo"><a href="{% url 'home' %}">
-                    <div class="logo-img"></div>
-                </a></li>
+                <li class="nav-logo"><a href="{% url 'home' %}"><div class="logo-img"></div></a></li>
                 {% for m in menu %}
                 <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a></li>
                 {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-register-link" href="{% url 'register' %}">Регистрация</a> |
+                    <a class="nav-register-link" href="{% url 'login' %}">Войти</a>
+                </li>
             </ul>
         </div>
     </nav>
