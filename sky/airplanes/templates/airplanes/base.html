@@ -21,8 +21,13 @@
                 <li class="nav-item"><a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a></li>
                 {% endfor %}
                 <li class="nav-item">
-                    <a class="nav-register-link" href="{% url 'register' %}">Регистрация</a> |
-                    <a class="nav-register-link" href="{% url 'login' %}">Войти</a>
+                    {% if request.user.is_authenticated %}
+                        <div>{{ user.username }} |
+                        <a class="nav-register-link" href="{% url 'logout' %}">Выйти</a></div>
+                    {% else %}
+                        <a class="nav-register-link" href="{% url 'register' %}">Регистрация</a> |
+                        <a class="nav-register-link" href="{% url 'login' %}">Войти</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>

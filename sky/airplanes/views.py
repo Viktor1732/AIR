@@ -1,9 +1,11 @@
+from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
-from .forms import AddAirplaneForm, RegisterUserForm
+from .forms import AddAirplaneForm, RegisterUserForm, LoginUserForm
 from .models import Airplane
 from .utils import DataMixin
 
@@ -39,10 +41,6 @@ class AddPost(DataMixin, CreateView):
 
 def contact(request):
     return HttpResponse('<h1>Обратная связь</1>')
-
-
-def login(request):
-    return HttpResponse("<h1>ВХОД</h1>")
 
 
 class ShowPost(DataMixin, DetailView):
@@ -92,6 +90,31 @@ class RegisterUser(DataMixin, CreateView):
         context['title'] = 'Регистрация пользователя'
         c_def = self.get_user_context()
         return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'airplanes/login.html'
+    success_url = 'home'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Авторизация'
+        c_def = self.get_user_context()
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
 
 
 def pageNotFound(request, exception):
