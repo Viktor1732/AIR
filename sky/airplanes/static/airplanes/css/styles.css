@@ -30,6 +30,8 @@ body a {
 .nav-list {
     width: 100%;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo-img {
@@ -42,10 +44,14 @@ body a {
 }
 
 .nav-items {
-    width: 100%;
+    margin-left: 30px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: left;
+}
+
+.nav-item {
+    margin-left: 100px;
 }
 
 .nav-link {
@@ -61,6 +67,16 @@ body a {
     column-gap: 35px;
 }
 
+.login-items{
+    color: #f2f1f0;
+    align-items: center;
+    justify-content: left;
+    margin-right: 30px;
+}
+
+.nav-register-link{
+    color: #f2f1f0;
+}
 
 /*main*/
 .main {
@@ -75,7 +91,7 @@ body a {
 /*main-nav*/
 .main-nav {
     width: 50%;
-    background-color: #4e4d4d;
+    background-color: #484743;
     display: flex;
 }
 
