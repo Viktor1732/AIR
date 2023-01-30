@@ -1,11 +1,11 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseNotFound
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 
-from .forms import AddAirplaneForm, RegisterUserForm, LoginUserForm
+from .forms import AddAirplaneForm, RegisterUserForm, LoginUserForm, ContactForm
 from .models import Airplane
 from .utils import DataMixin
 
@@ -44,8 +44,16 @@ class AddPost(DataMixin, CreateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-def contact(request):
-    return HttpResponse('<h1>Обратная связь</1>')
+class ContactCreate(DataMixin, CreateView):
+    form_class = ContactForm
+    template_name = 'airplanes/contact.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Обратная связь'
+        c_def = self.get_user_context()
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 class ShowPost(DataMixin, DetailView):
@@ -58,15 +66,6 @@ class ShowPost(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['post'])
         return dict(list(context.items()) + list(c_def.items()))
-
-
-def show_post(request, post_slug):
-    posts = get_object_or_404(Airplane, slug=post_slug)
-    context = {
-        'title': posts.title,
-        'post': posts
-    }
-    return render(request, 'airplanes/show_post.html', context=context)
 
 
 class AirplaneCategory(DataMixin, ListView):

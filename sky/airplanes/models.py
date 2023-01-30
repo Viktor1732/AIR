@@ -38,3 +38,18 @@ class Category(models.Model):
         verbose_name = 'Категории'
         verbose_name_plural = 'Категории'
         ordering = ['id']
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Имя пользователя')
+    login = models.CharField(max_length=50, null=True, verbose_name='Логин')
+    email = models.EmailField(max_length=50, verbose_name='Email')
+    message = models.TextField(max_length=500, verbose_name='Сообщение')
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+        ordering = ['name']

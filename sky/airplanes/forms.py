@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from .models import Airplane
+from .models import Airplane, Contact
 
 
 class AddAirplaneForm(forms.ModelForm):
@@ -45,3 +45,15 @@ class RegisterUserForm(UserCreationForm):
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'login', 'email', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
+            'login': forms.TextInput(attrs={'class': 'form-input'}),
+            'email': forms.EmailInput(attrs={'class': 'form-input'}),
+            'message': forms.Textarea(attrs={'cols': 50, 'rows': 10})
+        }
