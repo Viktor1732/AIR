@@ -152,6 +152,7 @@ body a {
 .block-desc {
     margin-top: 2px;
     display: flex;
+    margin-left: 20px;
 }
 
 .desc-image {

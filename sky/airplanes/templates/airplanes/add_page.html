@@ -1,20 +1,28 @@
 {% extends 'airplanes/base.html' %}
 
 {% block content %}
-
 <form action="{% url 'add_page' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <main>
+        <div class="circle"></div>
+        <div class="register-form-container">
+            <h1 class="form-title">Добавить статью</h1>
+            <div class="form-fields">
+                <div class="form-error">{{ form.non_field_errors }}</div>
 
-    <!-- Отображает ошибку над формой, если форма не валидна -->
-    <div class="form-error">{{ form.non_field_errors }}</div>
+                {% for f in form %}
+                <div class="form-field">
+                    {{ f }}
+                </div>
+                <div class="form-error">{{ f.errors }}</div>
+                {% endfor %}
 
-    {% for f in form %}
-    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-
-    <button type="submit">Добавить</button>
-
+                <div class="form-button">
+                    <button type="submit">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </main>
 </form>
 
 {% endblock content %}
