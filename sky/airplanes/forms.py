@@ -13,9 +13,11 @@ class AddAirplaneForm(forms.ModelForm):
 
     class Meta:
         model = Airplane
-        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat']
-        widgets = {'title': forms.TextInput(attrs={'class': 'form-input'}),
-                   'content': forms.Textarea(attrs={'cols': 50, 'rows': 10})
+        fields = ['title', 'slug', 'content', 'photo', 'cat']
+        widgets = {'title': forms.TextInput(attrs={'placeholder': 'Название'}),
+                   'slug': forms.TextInput(attrs={'placeholder': 'Слаг'}),
+                   'content': forms.Textarea(attrs={'class': 'form-content', 'placeholder': 'Текст статьи'}),
+                   'photo': forms.FileInput(attrs={'class': 'form-photo'}),
                    }
 
     def clean_title(self):

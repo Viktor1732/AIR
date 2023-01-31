@@ -21,7 +21,7 @@ class Airplane(models.Model):
     class Meta:
         verbose_name = 'Авиация'
         verbose_name_plural = 'Авиация'
-        ordering = ['time_create', 'title']
+        ordering = ['-time_create', 'title']
 
 
 class Category(models.Model):
