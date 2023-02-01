@@ -16,7 +16,7 @@ class AddAirplaneForm(forms.ModelForm):
         fields = ['title', 'slug', 'content', 'photo', 'cat']
         widgets = {'title': forms.TextInput(attrs={'placeholder': 'Название'}),
                    'slug': forms.TextInput(attrs={'placeholder': 'Слаг'}),
-                   'content': forms.Textarea(attrs={'class': 'form-content', 'placeholder': 'Текст статьи'}),
+                   'content': forms.Textarea(attrs={'class': 'form-text', 'placeholder': 'Текст статьи'}),
                    'photo': forms.FileInput(attrs={'class': 'form-photo'}),
                    }
 
@@ -34,10 +34,14 @@ class AddAirplaneForm(forms.ModelForm):
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-    password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(label='Имя пользователя',
+                               widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Имя'}))
+    email = forms.EmailField(label='Email',
+                             widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Email'}))
+    password1 = forms.CharField(label='Пароль',
+                                widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Пароль'}))
+    password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(
+        attrs={'class': 'form-input', 'placeholder': 'Повтор пароля'}))
 
     class Meta:
         model = User
@@ -45,17 +49,18 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(label='Имя пользователя',
+                               widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Имя'}))
+    password = forms.CharField(label='Пароль',
+                               widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Пароль'}))
 
 
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['name', 'login', 'email', 'message']
+        fields = ['name', 'email', 'message']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-input'}),
-            'login': forms.TextInput(attrs={'class': 'form-input'}),
-            'email': forms.EmailInput(attrs={'class': 'form-input'}),
-            'message': forms.Textarea(attrs={'cols': 50, 'rows': 10})
+            'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Имя'}),
+            'email': forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Email'}),
+            'message': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'form-text', 'placeholder': 'Сообщение'})
         }

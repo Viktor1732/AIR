@@ -3,17 +3,26 @@
 {{ title }}
 
 {% block content %}
-
-<form method="post">
+<form action="{% url 'login' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class='form-error'> {{ form.not_field_errors }} </div>
-    <ul>
-        {% for f in form %}
-            <p><label class="form-label" for="{{ f.id_form_label }}">{{ f.label }}: </label>{{ f }}</p>
-            <div class="form-error">{{ f.errors }}</div>
-        {% endfor %}
-    </ul>
-    <button type="submit">Войти</button>
-</form>
+    <main>
+        <div class="register-form-container">
+            <h1 class="form-title">Авторизация</h1>
+            <div class="form-fields">
+                <div class="form-error">{{ form.non_field_errors }}</div>
 
+                {% for f in form %}
+                <div class="form-field">
+                    {{ f }}
+                </div>
+                <div class="form-error">{{ f.errors }}</div>
+                {% endfor %}
+
+                <div class="form-button">
+                    <button type="submit">Войти</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
 {% endblock content %}
