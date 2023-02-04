@@ -94,6 +94,7 @@ main {
 
 .form-field {
     margin-top: 13px;
+    text-align: center;
 }
 
 .form-button {
@@ -117,4 +118,12 @@ main {
 
 .button:hover {
     background-color: #0D6CF2;
+}
+
+.captcha {
+    height: 70px;
+}
+
+#id_captch_1 {
+    margin-top: 7px;
 }
